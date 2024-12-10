@@ -1,0 +1,57 @@
+    private ScoreboardManager manager;
+    private Scoreboard scoreboard;
+    private Objective objective;
+    private int countdown = -1; // 游戏开始倒计时未开始
+    private int staus = 0; // 游戏开始前的倒计时未开始
+    private boolean isFinalCountdown = false; // 标记是否进入最后15秒阶段
+    private List<Player> finishers = new ArrayList<>(); // 到达终点的玩家列表
+
+    private  void  startMian(){
+        new BukkitRunnable() {
+
+            @Override
+            public void run() {
+                int onlinePlayers = Bukkit.getOnlinePlayers().size();
+                if(onlinePlayers >=2){
+                    if(staus == 0){
+                        Bukkit.getOnlinePlayers().forEach(player -> {
+                            player.sendTitle(ChatColor.YELLOW + "游戏将会在60秒后开始", "", 10, 70, 20);
+                        });
+                        staus = 1;
+                        countdown = 60;
+                    }
+                    if(staus == 1){
+                        countdown--;
+                        if(countdown == 0){
+                            countdown = 120;
+                            staus = 2;
+                            updateScoreboard(countdown, "游戏开始");
+                        }else{
+                        updateScoreboard(countdown, "游戏未开始");
+                        }
+                    }
+
+                }
+                if(onlinePlayers ==16){
+                    if(staus == 1){
+                        if(countdown => 15){
+                            countdown = 15;
+                        }
+
+                    }
+
+                }
+                if(2>onlinePlayers){
+                    if(staus == 1){
+                        countdown = -1;
+                        staus = 0;
+                        updateScoreboard(0, "人数不足2人");
+                    }
+                }
+                if(staus == 2){
+                    if(countdown = 0){
+                        endGame();
+                    }                }
+            }
+        }.runTaskTimer(this, 0, 20); // 每秒检测一次在线人数
+    }

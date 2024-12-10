@@ -1,0 +1,15 @@
+name: TtxpPlugin
+version: 1.1
+main: com.lemc.ttxp.Ttxp
+api-version: 1.12
+description: 一个简单的弹跳下坡小游戏插件。
+author: XJHya
+commands:
+  start:
+    description: 手动开始游戏
+    usage: /start
+    permission: mg.ttxp.qs
+permissions:
+  mg.ttxp.qs:
+    description: 手动开始游戏的权限
+    default: op
